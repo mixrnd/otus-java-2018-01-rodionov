@@ -1,0 +1,7 @@
+CREATE TABLE `user` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL DEFAULT '0',
+	`age` INT(3) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+)
+COLLATE 'unf8_general_ci';
