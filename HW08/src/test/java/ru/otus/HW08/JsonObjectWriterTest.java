@@ -30,10 +30,16 @@ public class JsonObjectWriterTest {
     }
 
     @Test
-    public void objrctFields() throws Exception {
+    public void objectFields() throws Exception {
         BagWithObject bagWithObject = new BagWithObject();
         String json = jsonObjectWriter.toJson(bagWithObject);
-        System.out.println(json);
         assertEquals(gson.toJson(bagWithObject), json);
+    }
+
+    @Test
+    public void nestedObject() throws Exception  {
+        BagWithNestedObject bagWithNestedObject = new BagWithNestedObject();
+        String json = jsonObjectWriter.toJson(bagWithNestedObject);
+        assertEquals(gson.toJson(bagWithNestedObject), json);
     }
 }

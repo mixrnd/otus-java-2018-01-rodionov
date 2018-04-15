@@ -35,7 +35,9 @@ public class JsonObjectWriter {
                 Object[] array = new Object[Array.getLength(fieldValue)];
                 for (int i = 0; i < array.length; i++) {
                     Object o = Array.get(fieldValue, i);
-                    addToBuilder(null, o, null, arrayBuilder);
+                    if (!addToBuilder(null, o, null, arrayBuilder)) {
+                        arrayBuilder.add(objectToJson(o));
+                    }
 
                 }
                 objectBuilder.add(fieldName, arrayBuilder);
@@ -43,13 +45,17 @@ public class JsonObjectWriter {
             } else if (fieldValue instanceof Iterable) {
                 JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
                 for (Object o : (Iterable) fieldValue) {
-                    addToBuilder(null, o, null, arrayBuilder);
+                    if (!addToBuilder(null, o, null, arrayBuilder)) {
+                        arrayBuilder.add(objectToJson(o));
+                    }
                 }
                 objectBuilder.add(fieldName, arrayBuilder);
             } else if(fieldValue instanceof Map) {
                 JsonObjectBuilder ob = Json.createObjectBuilder();
                 for (Map.Entry e : ((Map<Object, Object>)fieldValue).entrySet()) {
-                    addToBuilder(e.getKey().toString(), e.getValue(), ob, null);
+                    if (!addToBuilder(e.getKey().toString(), e.getValue(), ob, null)) {
+                        ob.add(e.getKey().toString(), objectToJson(e.getValue()));
+                    }
                 }
                 objectBuilder.add(fieldName, ob);
             } else {
